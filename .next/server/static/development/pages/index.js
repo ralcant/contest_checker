@@ -105,24 +105,113 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Index; });
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
 /* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+/* harmony import */ var _static_student_box__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ../static/student_box */ "./static/student_box.js");
 var _jsxFileName = "C:\\Users\\raul-\\MIT\\contest_checker\\pages\\index.js";
 
 var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
-let name = "Raul Alcantara";
-let answers = ["A", "B", "", "B", "A"];
-let correct_answer = ["A", "C", "D", "B", "D"];
+//import 'react'
+
+class Index extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
+  constructor(props) {
+    super(props);
+    this.correct_answer = ["A", "C", "D", "B", "D"], this.state = {
+      answers: new Map()
+    };
+    this.add_info = this.add_info.bind(this);
+    this.generate_students = this.generate_students.bind(this);
+  }
+
+  componentDidMount() {
+    this.add_info("Raul", ["A", "C", "", "B", "A"]);
+    this.add_info("Angie", ["B", "C", "D", "B", "A"]);
+    this.add_info("Joder", ["A", "C", "", "E", "A"]);
+    this.add_info("Ang", ["B", "C", "A", "B", "A"]);
+  }
+
+  generate_students() {
+    let result = [];
+    console.log(this.state.answers);
+
+    for (let student of this.state.answers) {
+      console.log(student);
+
+      let student_component = __jsx(_static_student_box__WEBPACK_IMPORTED_MODULE_1__["default"], {
+        name: student,
+        answers: this.state.answers.get(student),
+        correct_answer: this.correct_answer,
+        __source: {
+          fileName: _jsxFileName,
+          lineNumber: 27
+        },
+        __self: this
+      });
+
+      result.push(student_component);
+    }
+
+    ;
+    return result;
+  }
+
+  add_info(name, answers) {
+    let answer_so_far = this.state.answers;
+    answer_so_far.set(name, answers);
+    this.setState({
+      answers: answer_so_far
+    }, () => {
+      console.log("updated! " + name + " " + this.state.answers[name]);
+    });
+  }
+
+  render() {
+    return __jsx("div", {
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 48
+      },
+      __self: this
+    }, this.generate_students());
+  }
+
+}
+
+/***/ }),
+
+/***/ "./static/student_box.js":
+/*!*******************************!*\
+  !*** ./static/student_box.js ***!
+  \*******************************/
+/*! exports provided: default */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+__webpack_require__.r(__webpack_exports__);
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "default", function() { return Student_box; });
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! react */ "react");
+/* harmony import */ var react__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(react__WEBPACK_IMPORTED_MODULE_0__);
+var _jsxFileName = "C:\\Users\\raul-\\MIT\\contest_checker\\static\\student_box.js";
+
+var __jsx = react__WEBPACK_IMPORTED_MODULE_0___default.a.createElement;
+//import 'react'
 let correct_answer_score = 10;
 let incorrect_answer_score = -2;
 let blank_answer_score = 0;
-function Index() {
-  function get_scores(answers) {
+class Student_box extends react__WEBPACK_IMPORTED_MODULE_0___default.a.Component {
+  constructor(props) {
+    super(props);
+    this.get_scores = this.get_scores.bind(this);
+    this.get_question_score = this.get_question_score.bind(this);
+    this.get_total_score = this.get_total_score.bind(this);
+  }
+
+  get_scores(answers) {
     let result = [];
 
     for (let i = 0; i < answers.length; i++) {
       result.push(__jsx("li", {
         __source: {
           fileName: _jsxFileName,
-          lineNumber: 12
+          lineNumber: 16
         },
         __self: this
       }, "Answer for problem ", i + 1, " was ", answers[i]));
@@ -131,7 +220,7 @@ function Index() {
     return result;
   }
 
-  function get_question_score(answer, correct_answer) {
+  get_question_score(answer, correct_answer) {
     if (answer == correct_answer) {
       return correct_answer_score;
     } else if (answer == "") {
@@ -141,42 +230,45 @@ function Index() {
     }
   }
 
-  function get_total_score(answers) {
+  get_total_score(answers) {
     let score = 0;
 
     for (let i = 0; i < answers.length; i++) {
-      let add_score = get_question_score(answers[i], correct_answer[i]);
+      let add_score = this.get_question_score(answers[i], this.props.correct_answer[i]);
       score += add_score;
     }
 
     return score;
   }
 
-  return __jsx("div", {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 39
-    },
-    __self: this
-  }, __jsx("ol", {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 40
-    },
-    __self: this
-  }, __jsx("li", {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 41
-    },
-    __self: this
-  }, "Name is ", name), get_scores(answers)), __jsx("p", {
-    __source: {
-      fileName: _jsxFileName,
-      lineNumber: 44
-    },
-    __self: this
-  }, " The score is ", get_total_score(answers)));
+  render() {
+    return __jsx("div", {
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 44
+      },
+      __self: this
+    }, __jsx("ol", {
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 45
+      },
+      __self: this
+    }, __jsx("li", {
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 46
+      },
+      __self: this
+    }, "Name is ", this.props.name), this.get_scores(this.props.answers)), __jsx("p", {
+      __source: {
+        fileName: _jsxFileName,
+        lineNumber: 49
+      },
+      __self: this
+    }, " The score is ", this.get_total_score(this.props.answers)));
+  }
+
 }
 
 /***/ }),
